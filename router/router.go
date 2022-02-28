@@ -8,7 +8,9 @@ import (
 func StartRouter() {
 	r := gin.Default()
 
-	r.POST("/login", controller.UserLogin)
+	r.POST("/get_mail", controller.GetMail)
+
+	r.POST("/logout", controller.Logout)
 
 	r.Run("192.168.31.63:8888")
 }
