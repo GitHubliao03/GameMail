@@ -1,4 +1,4 @@
-package cache
+package controller
 
 import (
 	"fmt"
@@ -7,10 +7,9 @@ import (
 
 //UserMgr实例在服务器端有且只有一个
 //在许多地方都会用到，因此将其定义为全局变量
-//var (
-//	userMgr *UserMgr
-//)
-var userMgr *UserMgr
+var (
+	userMgr *UserMgr
+)
 
 type UserMgr struct {
 	onlineUsers map[int]*model.UserCache
@@ -30,7 +29,7 @@ func init() {
 
 func (um *UserMgr) AddOnlineUser(up *model.UserCache) {
 	fmt.Println("添加在线用户")
-	um.onlineUsers[up.User.ID] = up
+	um.onlineUsers[up.User.UserID] = up
 }
 
 //删除在线用户

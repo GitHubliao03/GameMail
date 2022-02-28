@@ -17,4 +17,10 @@ func CreateAllMail(titleString string, contentString string, propID int) error {
 	}
 
 	//将全体邮件发送给所有在线用户
+	err = SendAllMailToOnlineUsers(allMail)
+	if err != nil {
+		fmt.Println("转发全体邮件失败")
+		return err
+	}
+	return nil
 }

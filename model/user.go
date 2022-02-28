@@ -6,9 +6,9 @@ import (
 )
 
 type User struct {
-	ID    int
-	Level int
-	Name  string
+	UserID int
+	Level  int
+	Name   string
 
 	LastActiveTime time.Time
 }
