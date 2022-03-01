@@ -5,6 +5,7 @@ import (
 	"gameMail/dao"
 	"gameMail/model"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"net/http"
 	"strconv"
 	"time"
@@ -12,6 +13,36 @@ import (
 
 func GetMail(c *gin.Context) {
 	//获取用户ID及上次活跃时间
+	userID := strconv.Atoi(c.PostForm("user_id"))
+
+	user, err := dao.CheckUserID(userID)
+	if err == gorm.ErrRecordNotFound {
+		fmt.Println("获取用户信息失败")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "错误的用户ID",
+		})
+		return
+	} else if err != nil {
+		fmt.Println("获取用户信息失败")
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "服务器内部错误",
+		})
+		return
+	}
+
+	lastActiveTime := user.LastActiveTime
+	userUnreadAllMail, err := GetMailBYActiveTime(lastActiveTime)
+	if err == gorm.ErrRecordNotFound {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "暂无未读全体邮件",
+		})
+		return
+	} else if err != nil {
+		c.JSON(http.StatusOK, gin.H{
+			"error": "服务器内部错误",
+		})
+		return
+	}
 
 	//返回所有未读未失效邮件
 	//c.JSON(http.StatusOK, gin.H{
