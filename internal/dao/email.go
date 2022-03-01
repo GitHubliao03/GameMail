@@ -32,3 +32,11 @@ func (dao *Dao) DeleteMailBatch(clearTime time.Time) (int64, error) {
 	db := dao.db.Where("clear_time>?", clearTime).Update("is_del", 1)
 	return db.RowsAffected, db.Error
 }
+
+// GetMailContentByIDs 查看一系列指定的邮件的内容
+func (dao *Dao)GetMailContentByIDs(ids []int)([]string,int64,error) {
+	var mailsContent []string
+	db := dao.db.Select("content").
+		Where("id IN ? and is_del = 0 and send_time > ?",ids,time.Now()).Find(&mailsContent)
+	return mailsContent,db.RowsAffected,db.Error
+}

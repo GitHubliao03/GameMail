@@ -23,7 +23,7 @@ func (m *Mail) TableName() string {
 type MailContent struct {
 	Title string `json:"title"` //标题
 	Context string `json:"context"` //正文
-	GoodsID string `json:"goods_id"`//领取的物品id
+	GoodsID int `json:"goods_id"`//领取的物品id
 }
 
 const (
