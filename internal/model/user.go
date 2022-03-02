@@ -18,3 +18,11 @@ type User struct {
 func (m *User) TableName() string {
 	return "user"
 }
+
+type UserCache struct {
+	*User
+	NextTime time.Time	//下次刷新的时间
+	Num int	//刷新缓存的时间
+	OnlineTime time.Time	//上线的时间
+}
+

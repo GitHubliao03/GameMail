@@ -23,5 +23,19 @@ func (m *Mail) TableName() string {
 type MailContent struct {
 	Title string `json:"title"` //标题
 	Context string `json:"context"` //正文
-	GoodsID string `json:"goods_id"`//领取的物品id
+	GoodsID int `json:"goods_id"`//领取的物品id
+}
+
+const (
+	AllUser = iota +1 //全体用户
+	SpecificUser //指定用户
+	LevelUser	//用户等级
+	HasGoodUser	//拥有道具的用户
+)
+
+// FilterRuler Filter 的规则
+type FilterRuler struct {
+	Field int `json:"field"`
+	Operator string `json:"operator"`
+	Value string `json:"value"`
 }
